@@ -10,4 +10,5 @@ WriteMakefile(
 	'clean'			=> {
 		'FILES'	=> 'Devel-FindGlobals-*'
 	},
+	'NO_META'		=> 1,
 );

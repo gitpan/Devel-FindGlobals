@@ -16,7 +16,28 @@ our %SYMS = (
 	CODE	=> '&',
 );
 
-our $VERSION = 0.02;
+our $VERSION = 0.03;
+
+{
+	# we don't want to hit a variable more than once, because we
+	# can get in a loop
+	my %seen = ();
+
+	sub _seen {
+		my($sym) = @_;
+		if ($seen{$sym}) {
+			return 1;
+		} else {
+			$seen{$sym} = 1;
+			return 0;
+		}
+	}
+
+	sub _reset_seen {
+		%seen = ();
+	}
+}
+
 
 =head1 NAME
 
@@ -194,32 +215,13 @@ sub _get_opts {
 	return %opts;
 }
 
-BEGIN {
-	# we don't want to hit a variable more than once, because we
-	# can get in a loop
-	my %seen = ();
-
-	sub _seen {
-		my($sym) = @_;
-		if ($seen{$sym}) {
-			return 1;
-		} else {
-			$seen{$sym} = 1;
-			return 0;
-		}
-	}
-
-	sub _reset_seen {
-		%seen = ();
-	}
-}
-
+1;
 
 =head1 AUTHOR
 
 Chris Nandor E<lt>pudge@pobox.comE<gt>, http://pudge.net/
 
-Copyright (c) 2002-2003 Chris Nandor.  All rights reserved.  This program
+Copyright (c) 2002-2004 Chris Nandor.  All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the same
 terms as Perl itself.
 
